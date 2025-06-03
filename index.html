@@ -6,6 +6,13 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lab 9</title>
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "374afbdaa3c747598b1a5d78d960bd55"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+  </script>
 
   <style>
     button {
@@ -102,6 +109,77 @@
 
     // Start your code here
     // You may move this JS to another file if you wish
+
+    errorBtns.forEach((button) => {
+      const label = button.textContent;
+
+      button.addEventListener("click", () => {
+        switch (label) {
+          case "Console Log":
+            console.log("Console Log button");
+            break;
+          case "Console Error":
+            console.error("Console Error Button");
+            break;
+          case "Console Count":
+            console.count("Count Button");
+            break;
+          case "Console Warn":
+            console.warn("Console Warn Button");
+            break;
+          case "Console Assert":
+            console.assert(false, "Console Assert Button");
+            break;
+          case "Console Clear":
+            console.clear();
+            break;
+          case "Console Dir":
+            console.dir();
+            break;
+          case "Console dirxml":
+            console.dirxml(button);
+            break;
+          case "Console Group Start":
+            console.group("Grouped logs");
+            break;
+          case "Console Group End":
+            console.groupEnd();
+            break;
+          case "Console Table":
+            console.table([{ name: "Alice", age: 25 }, { name: "Bob", age: 30 }]);
+            break;
+          case "Start Timer":
+            console.time("My Timer");
+            break;
+          case "End Timer":
+            console.timeEnd("My Timer");
+            break;
+          case "Console Trace":
+            console.trace("Trace message from button call");
+            break;
+          case "Trigger a Global Error":
+            try {
+              badFunc();
+            } catch (err) {
+              throw new GlobalError("badFunc() not defined");
+            } finally {
+              window.onerror = function (message, source, lineno, colno, error) {
+                console.log("Caught an error");
+                console.log(error);
+                return true; // prevents default browser error logging (optional)
+              };
+            }
+          default:
+            console.log("Unrecognized button.");
+        }
+      });
+    });
+    class GlobalError extends Error {
+      constructor(message){
+        super(message);
+        this.name = "GlobalError";
+      }
+    }
   </script>
 </body>
 
